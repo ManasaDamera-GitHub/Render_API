@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+</head>
+
+<body>
+    <button id="get">GET</button>
+    <button id="post">POST</button>
+    <button id="other">OTHER</button>
+    <div id="container"></div>
+    <div id="div2"></div>
+    <h1 id="h1"></h1>
+
+    <script>
+        let get = document.getElementById("get");
+        let post = document.getElementById("post");
+        let other = document.getElementById("other")
+        get.addEventListener("click", (event) => {
+            fetch("http://localhost:3002").then((Val) => {
+                console.log(Val);
+                return Val.json();
+            }).then((val) => {
+                // console.log(val);
+                let container = document.getElementById("container");
+                // container.innertext = val.title;
+                val.forEach(obj => {
+                    console.log(obj);
+                    let item = document.createElement("div")
+                    item.innerHTML = `<p>${obj.title}</p>
+                    <img src="${obj.image}">`;
+                    container.appendChild(item);
+
+                })
+                container.style.display = "block";
+                div2.style.display = "none";
+                h1.style.display = "none"
+            })
+
+
+        });
+
+
+        post.addEventListener("click", () => {
+            fetch("http://localhost:3002", { method: "POST" }).then((Val) => {
+                console.log(Val)
+                return Val.json();
+            }).then((data) => {
+                let div2 = document.getElementById("div2");
+                // div2.innerHTML = `<p>${JSON.stringify(data.quote)}</p>`;
+                console.log(data);
+                data.quotes.forEach(obj => {
+                    console.log(obj)
+                    let item = document.createElement("div");
+                    item.innerHTML = `<p>${obj.quote}</p>`
+                    div2.appendChild(item);
+
+                })
+
+                container.style.display = "none";
+                div2.style.display = "block";
+                h1.style.display = "none";
+            })
+        })
+        other.addEventListener("click", () => {
+            let h1 = document.getElementById("h1");
+            h1.innerText = "Try to enter GET or POST method"
+
+            container.style.display = "none";
+            div2.style.display = "none";
+            h1.style.display = "block";
+        })
+    </script>
+</body>
+
+</html>
