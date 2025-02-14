@@ -4,13 +4,13 @@ const http = require("http");
 const server = http.createServer(async (req, res) => {
     // res.write("hello")
     // res.end();
-    if (req.method == "GET") {
+    if (req.method == "GET" && url == "/products") {
         let response = await fetch("https://fakestoreapi.com/products");
         let data = await response.json();
         res.write(JSON.stringify(data));
         res.end();
     }
-    else if (req.method == "POST") {
+    else if (req.method == "POST" && url == "/quotes") {
         let response = await fetch("https://dummyjson.com/quotes");
         let data = await response.json();
         res.write(JSON.stringify(data));
